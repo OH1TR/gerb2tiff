@@ -1,0 +1,202 @@
+Proposed changes to next revision:
+------------------------------------------------------------------------------
+ * correctly implement blank holes in standard apertures flashes
+ 
+
+
+
+Description of revision changes : (release date)
+
+Version  1.2      (6-Feb-2011)
+------------------------------------------------------------------------------
+* Added IR (Image Rotation) parameter support.
+* Added IJ (Image Justify) parameter support.
+* Changed build process for GNU autotool built system.
+  See INSTALL for instruction on compiling.
+  The Windows 32bit executalbe is in separated archive, 
+  gerb2tiff-{version}-win32-bin.zip
+* removed redundant sub-minor version numbers    
+
+
+
+Version  1.0.9      (20-Dec-2010)
+------------------------------------------------------------------------------
+* bug fix: Polygon drawing code completely rewritten. This fixed problems with 
+  arcs and line mismatching. Also fixed the problem of occurring rouge horizontal 
+  scan lines. 
+* bug fix: Aperture primitive 21 (Line Centre) had centre position located at 
+  upper left instead of lower left.
+* Improved bitmap rendering speed.
+
+Version  1.0.8      (8-Oct-2009)
+------------------------------------------------------------------------------
+* bug fix: fixed crash when multiple input gerber files specified.
+
+Version  1.0.7      (3-Oct-2009)
+------------------------------------------------------------------------------
+* bug fixed: arcs with equal start and ending points were not drawn.
+
+Version  1.0.6      (16-July-2009)
+------------------------------------------------------------------------------
+* bug fixed: The width of traces were incorrectly scaled to the square of the
+  scale factor.
+* bug fixed: IPNEG and IPPOS parameters were not being recognised.
+* Implemented MI (Mirror Axis) parameter
+* Implemented IF (Include File) parameter. note: nested includes are allowed, and 
+  recursive includes are not safeguarded. Error reporting does not contain include 
+  file information. These two problems can be fixed in future versions. 
+* Arcs are now supported in polygon drawing
+* Improved robustness in reading coordinate data. Can handle excess digits than 
+  designated in FS parameter.
+* Improved arc drawing algorithm yet again. Added correction mechanism for 
+  mismatched arc centres in 360 degree circular mode. In single quadrant, arc 
+  centres are always relative to the tool location prior to G03/G02 command, by an 
+  offset given by I,J. In single quadrant mode arc radius = sqrt(I*I + J*J).
+  Arc with zero radius are replaced with line segments. 
+  (Gerber arcs are horrible to implement)  
+
+Version  1.0.5      (10-July-2009)
+------------------------------------------------------------------------------
+* bug fixed: The last vertex in G36 command polygons was ignored. This caused 
+  polygons that did not have the last vertex matching the first vertex to be drawn 
+  incorrectly.
+* bug fixed: An aperture change followed by any drawing within the same 
+  command block would not draw the first line/arc correctly.
+* bug fixed: Any command data block caused drawing to occur if the lamp state 
+  was on. For example, the command block 'G37*' would draw to current X Y position
+  if lamp was on. The correct method draws only if a command block 
+  contains any one of the following commands: X, Y, I, J or D1 (lamp on) and is 
+  not in polygon mode.     
+* improved error reporting on macro definitions              
+
+
+Version  1.0.4      (9-July-2009)
+------------------------------------------------------------------------------
+* bug fixed: Consecutive ADD data blocks were not recognised inside a single '%' block.              
+
+Version  1.0.3      (4-July-2009)
+------------------------------------------------------------------------------
+* added options, --grow-mm, --boarder-pixels, --strip-rows
+* verbose mode reports bitmap origin location.
+* multiple Gerber files on command line are overlayed to a single bitmap.
+  
+
+
+Version  1.0.2      (22-June-2009)
+------------------------------------------------------------------------------
+* Fixed several bugs with arc drawing
+* Added support linear line drawing using the standard Rectangle aperture.
+* Added options for image scaling.
+* Improved error reporting
+* Improved command line interface.
+* Capable of reading Gerber data form standard input
+
+Version  1.0.0beta  (5-June-2009)
+------------------------------------------------------------------------------
+* The project was renamed to gerb2tiff
+* A complete rewrite of the source code. 
+   The image is now rendered entirely by polygons
+   Uses bison and flex for the parser
+* Close to full implementation of the full RS-274X standard
+* Improved speed and memory usage.  
+ 
+Version  0.74  (19-October-2007)
+------------------------------------------------------------------------------
+* fixed problem with gerb2tif.exe dependencies. A quick fix was to 
+include cygwin1.dll
+
+Version  0.73  (19-October-2007)
+------------------------------------------------------------------------------
+* fixed small bug with TIFF library reporting an error   
+
+Version  0.72  (9-Sept-2007)
+------------------------------------------------------------------------------
+* uses the LibTIFF library (fixed DPI bug in TIFF header and output is compressed) 
+
+Version  0.71  ()
+------------------------------------------------------------------------------
+* added %OF Image offset parameter
+
+Version  0.70  (5th April 2007)
+------------------------------------------------------------------------------
+* Multiple Gerber files on the command line are now superimposed to a single output. 
+  The Gerber X,Y coordinates for each file are directly overlayed.
+* Added option to add or subtract a given number of pixels width to outlines of 
+  all apertures. 
+* Fixed some other bugs.
+
+ 
+Version  0.63  (uploaded 28th May 2004)
+------------------------------------------------------------------------------
+* bugs fixes 
+  fixed program crash from Aperture Macro Circles AND Line Vectors printing 
+  with non zero centre position
+
+
+Version  0.62b  
+------------------------------------------------------------------------------
+* bugs fixes - initialised X,Y coordinates to zero at startup.
+* less strict with RS-274X %FS parameter format. 
+
+
+Version  0.62  (uploaded 14th April 2004)
+------------------------------------------------------------------------------
+* fixed bug with %IPNEG command
+* Area information reports total area of positive pixels in bitmap (see readme.txt)
+
+
+Version  0.61  (uploaded 12th April 2004)
+------------------------------------------------------------------------------
+* FS parameter defaults to %FSALX23Y23*% in spite of RS-274X not specifying defaults.
+* fixed bug with Incremental Coordinate format.
+
+
+Version  0.6  (uploaded 30th March 2004)
+------------------------------------------------------------------------------
+* Support for incremental coordinates mode (untested !)
+* Added special aperture primitive number 1,  Circle.
+* Added special aperture primitive number 22,  Line(Lower Left).
+* Added special aperture primitive number 20/2,  Line(Vector).
+* Macro Aperture modifiers for Centre Position, Exposure State and Rotation now
+  take effect.
+* Support for Macro Apertures with multiple or combined primitives of the same
+  macro name.
+* Removed -S command line option for subtracting outline of shapes. Feature
+  was not necessary and also had bugs.
+* some bug fixes.
+
+
+Version  0.5  (uploaded 26th March 2004)
+------------------------------------------------------------------------------
+* Added circular interpolation drawing features of the Gerber standard. Circular
+  drawing commands G03, G02, G74, G75 are now recognised.
+* Correctly implemented Macro Apertures with parameter passing of the modifier list.
+  Previously version did not allow Macro Apertures modifier lists to be modified.
+* Removed -a option and made area information always displayed.
+* Added support for commands %MI, %IP.
+* Added special aperture primitive number 21,  Line(Centre).
+* More robust error checking during parsing, and other small improvements.
+
+
+Version  0.4  (uploaded on 7 July 2001 )
+------------------------------------------------------------------------------
+* Fixed problem with rounding the size of apertures types Circle and Orbround.
+  The bitmap image now represents a more accurate rounded size of these apertures.
+* Added feature for subtracting a set number of pixels from the outline
+  of all shapes drawn. Useful for correcting phototool trace width dimensions.
+* Added detailed descriptions of command line options to readme.txt
+
+
+Version  0.3  (uploaded on 4th April 2001)
+------------------------------------------------------------------------------
+* Added support for Gerber command G04 - "Ignore Data Block"
+* Displays total area of image in square centimetres, see -a option
+* Optimised drawing routines to only draw outline pixels of the aperture
+  shape that are dependent upon the direction movement. (plotting time is
+  less than half)
+* Corrected my email address in Readme.txt file.
+
+
+Version  0.2  (uploaded on 4th April 2001)
+------------------------------------------------------------------------------
+* The first release

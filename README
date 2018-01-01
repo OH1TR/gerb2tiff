@@ -1,0 +1,69 @@
+
+GERB2TIFF 
+====================================================================
+utility to generate raster graphics bitmap from Gerber RS274X files.
+
+
+Package contents
+--------------------------
+
+File/path                Description
+----------------------------------------------------------
+aclocal.m4            
+ChangeLog            List of changes to each version release
+configure
+configure.ac
+COPYING              GNU General Publuc Lisence
+INSTALL              General Installation Instructions
+Makefile.am         
+Makefile.in
+NEWS
+README   		     This file 
+build-aux/           Auxilary programs for configure
+src/                 Source files
+html/                Documentation
+examples/            Examples of RS274X gerber files 
+
+
+
+
+Documention
+--------------------------
+
+All the documentation is in HTML in the html directory.  
+To view the documentation point your favourite WWW viewer at html/index.html;
+
+
+Install
+--------------------------
+See INSTALL for general install instructions.
+Basically what you want to do is:
+
+    % ./configure
+    % make
+    % su
+    % make install
+
+
+Dependencies
+--------------------------
+Libraries:
+
+    libtiff - version 3.9.1 or later. Available from http://www.libtiff.org/
+    
+    
+
+Use and Copyright
+-------------------------
+
+Copyright (c) 2009 Adam Seychell
+ 
+This program is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation. This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+details. A copy of the GNU General Public License is included in the file
+COPYING of this package.
+ 
+

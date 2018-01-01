@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><title>gerb2tiff manual</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head>
+<body>
+<table style="width: 909px; height: 3196px;" border="0" cellpadding="2" cellspacing="2">
+<tbody>
+<tr>
+<td style="vertical-align: top;">
+<h1 style="text-align: center;">Gerb2tiff&nbsp;&nbsp;User Manual</h1>
+<div style="text-align: center;"><big>Version 1.2<br>Last updated 6-Feb-2011</big>
+</div><br>Copyright (c) 2009, 2010, 2011 Adam Seychell<br>
+&nbsp;<br>
+This program is free software;
+you can redistribute it and/or modify it under the terms of the GNU
+General Public License as published by the Free Software Foundation. This
+program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+for more details.<br>
+<br>
+The latest version of gerb2tiff is available for download at my<a href="http://members.optusnet.com.au/eseychell/"> home page</a><br>
+<br>
+<br>
+<br>
+<hr style="width: 100%; height: 2px;">
+<h2>Introduction</h2>
+Gerb2tiff
+is a&nbsp;command line utility to generate a raster graphics bitmap
+from
+Gerber RS274X files. <br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The
+purpose of this program is to convert Gerber RS274X files (produced
+from electronic CAD software) into a bitmap image. The image
+can then
+be manipulated and/or printed by common graphics software to suit the
+users
+needs. Gerb2tiff is a&nbsp;simple,&nbsp;and fast tool, capable of
+generating large&nbsp; high resolution images typically required for
+PCB artworks.<br><br><h4>Image Bitmap&nbsp;</h4>The
+bitmap file produced by gerb2tiff is a compressed monochrome
+TIFF.&nbsp; <br><br>
+<br>
+<span style="font-weight: bold;"></span>
+<hr style="width: 100%; height: 2px;">
+<h2>Usage</h2>
+<span style="font-weight: bold; font-family: monospace;">gerb2tiff
+&nbsp;</span><span style="font-family: monospace;">[</span><span style="font-style: italic; font-family: monospace;">OPTIONS</span><span style="font-family: monospace;">]&nbsp;&nbsp;&nbsp;[</span><span style="font-style: italic; font-family: monospace;">file1</span><span style="font-family: monospace;">]&nbsp;[</span><span style="font-style: italic; font-family: monospace;">file2</span><span style="font-family: monospace;">]...</span><br>
+<br>Where <span style="font-style: italic; font-family: monospace;">file1</span> <span style="font-style: italic; font-family: monospace;">&nbsp;file2...</span><span style="font-family: monospace;"><span style="font-style: italic;"></span></span>
+are optional gerber files rendered as overlays to a single bitmap. Each
+overlay is rendered in the order specified.&nbsp;No modification is
+made to coordinate offsets when rendering multiple overlays. Standard
+input is read if no gerber files specified and --output is specified.
+If
+successful, a TIFF output file will be generated
+containing&nbsp;the
+rasterized image of the&nbsp;Gerber data.<br><br><h3>Command
+Line Options</h3>
+<span style="font-weight: bold;"></span><br>
+<table style="text-align: left; width: 901px; height: 572px;" border="1" cellpadding="2" cellspacing="2">
+<tbody>
+<tr>
+<td style="vertical-align: top;"><span style="font-weight: bold;">-p,
+--dpi=</span><span style="font-style: italic;">X</span><span style="font-weight: bold;"> </span></td>
+<td style="vertical-align: top;">Specifies
+<span style="font-style: italic;">X</span>&nbsp;dots per inch to render the bitmap. The value must be above
+or equal to 1. Floating point vales are allowed. Default&nbsp;is
+2400. <br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><span style="font-weight: bold;"> -o,
+--output=</span><span style="font-style: italic;">FILE</span></td>
+<td style="vertical-align: top;">Set name of output TIFF to <span style="font-style: italic;">FILE</span>. If gerber-file is specified then default is &lt;<span style="font-style: italic; font-family: monospace;">file1</span>&gt;.tiff&nbsp;<br>This option is required when no gerber-file specified and to allow reading from standard input.<br>
+</td>
+</tr>
+<tr><td style="vertical-align: top;"><span style="font-weight: bold;"> -q,
+--quiet</span></td><td style="vertical-align: top;">Suppress warnings and non critical messages. This option is disabled with -v option<br>
+</td></tr><tr>
+<td style="vertical-align: top;"><span style="font-weight: bold;"> -n,
+--negative </span></td>
+<td style="vertical-align: top;">Negate
+image in polarity. Images of positive polarity are plotted with black
+pixels on a clear background. The image polarity&nbsp;is affected
+by both
+this option and the optional IP (Image Polarity) parameter specified in
+the Gerber data. Image
+polarity will be
+negative if exactly one of either the Gerber IPNEG parameter is
+specified or this option is specified, otherwise the image polarity
+will be positive.&nbsp;The
+result of last IP parameter to occur in the first gerber file (if
+specified) or in the standard input will be used. All other occurrences
+of the IP parameter will be ignored.&nbsp; </td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><span style="font-weight: bold;">b, --boarder-mm=</span><span style="font-style: italic;">X</span><span style="font-weight: bold;"> </span></td>
+<td style="vertical-align: top;">Increase
+the boarder of all four sides of the image by <span style="font-style: italic;">X</span> millimeters. The image size without any boarder is equal to the
+far extremes of plotted shapes specified in the RS-274X file plus a 0
+or 1 pixel boarder. Default&nbsp; value is 0. <br>
+</td>
+</tr>
+<tr><td><span style="font-weight: bold;">--boarder-pixels=</span><span style="font-style: italic;">X</span></td><td>Same as&nbsp;<span style="font-weight: bold;">
+--boarder-mm</span> except <span style="font-style: italic;">X</span> represents boarder size in pixels.</td></tr><tr>
+<td style="vertical-align: top;"><span style="font-weight: bold;"> -t </span></td>
+<td style="vertical-align: top;">Parses
+the Gerber input file(s) without creating any bitmap.
+Useful&nbsp;determining image data when used in conjunction
+with
+-v option.
+<br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><span style="font-weight: bold;"> -v </span></td>
+<td style="vertical-align: top;">Verbose
+mode. Display extra information while processing. Multiple -v increases
+verbosity. This option also disables <span style="font-weight: bold;">--quiet</span><br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><span style="font-weight: bold;">--scale-x=</span><span style="font-style: italic;">S</span></td>
+<td style="vertical-align: top;">Scale
+image in X axis by <span style="font-style: italic;">S</span>. Negative&nbsp;values&nbsp;mirror image about the Y axis. <span style="font-weight: bold;"></span></td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><span style="font-weight: bold;">--scale-y=</span><span style="font-style: italic;">S</span></td>
+<td style="vertical-align: top;">Scale
+image in Y axis by <span style="font-style: italic;">S</span>. Negative&nbsp;values&nbsp;mirror image about the X axis.
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><span style="font-weight: bold;"> --grow-mm=</span><span style="font-style: italic;">X</span><span style="font-weight: bold;"> </span></td>
+<td style="vertical-align: top;">Expand
+perimeter of all aperture shape features by <span style="font-style: italic;">X</span>
+millimeters. Negative values
+shrink. Note tthis feature is not implimented on some dimentions of the
+more complex macro apertures&nbsp;and to dimentions of G36 polygon
+drawing.<br>
+</td>
+</tr>
+<tr><td style="vertical-align: top;"><span style="font-weight: bold;"> --grow-pixels=</span><span style="font-style: italic;">X</span><span style="font-weight: bold;"> </span></td><td style="vertical-align: top;">Same as&nbsp;<span style="font-weight: bold;">--grow-mm</span> except <span style="font-style: italic;">X</span><span style="font-weight: bold; font-style: italic;"> </span>represents&nbsp;grow size in pixels. <br>
+</td></tr><tr><td style="vertical-align: top;"><span style="font-weight: bold;">--strip-rows=</span><span style="font-style: italic;">N</span></td><td>Specifies
+<span style="font-style: italic;">N</span> rows
+per strip&nbsp;in TIFF output.&nbsp;Limiting the strip size may be
+required by some software when handling very large images. A small
+strip size will produced slightly larger files. Please note that
+gerb2tiff uses an internal working buffer equal
+to the strip size and therefore memory usage will be proportional to
+<span style="font-style: italic;">N</span>. If <span style="font-style: italic;">N</span> is zero or <span style="font-style: italic;">N</span> is greater than the image height then the rows per
+strip is equal to the image height&nbsp;resulting in&nbsp;a single strip TIFF. Default value of <span style="font-style: italic;">N</span> is 512. </td></tr><tr>
+<td style="vertical-align: top; width: 20%;"><span style="font-weight: bold;"> -a,
+--area </span></td>
+<td style="vertical-align: top;">Show
+total&nbsp;area in units centimeters squared of both image positive
+area and negative area.
+Positive area&nbsp;is calculated from the sum of black (dark) pixels in
+bitmap multiplied by the centimeter square
+area occupied by one pixel. Negative area is calculated using using
+white (clear) pixels instead of black (dark). Due to rounding errors,
+the result&nbsp;will vary
+slightly with DPI settings. Total area may be useful for electroplating
+processes. </td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><span style="font-weight: bold;"> --help </span></td>
+<td style="vertical-align: top;">Show help
+screen, including version number. </td>
+</tr>
+</tbody>
+</table>
+<br>
+<hr style="width: 100%; height: 2px;">
+<h2>Unsupported
+features of the standard</h2>
+From gerb2tiff version 1.0, most the standard has been implemented,
+except
+for some rarely used features. Below is a&nbsp;list of unsupported
+commands and know problems. Some of the missing features may not be
+difficult for me to add and
+I could be willing to implement them on request from users. The table
+below lists RS-274X parameters and commands that will cause gerb2tiff
+to abort with an error.<br>
+<br>
+<table style="text-align: left; width: 615px; height: 240px;" border="1" cellpadding="2" cellspacing="2">
+<tbody>
+<tr>
+<td style="vertical-align: top; font-weight: bold; background-color: rgb(239, 255, 116);">Parameter<br>
+</td>
+<td style="vertical-align: top; font-weight: bold; background-color: rgb(239, 255, 116);">Description<br>
+</td>
+<td style="font-weight: bold; background-color: rgb(234, 249, 113);">Action</td><td style="vertical-align: top; font-weight: bold; background-color: rgb(234, 249, 113);">Comment<br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left;">AS<br>
+</td>
+<td style="vertical-align: top;">Axis Swap</td>
+<td>abort</td><td style="vertical-align: top;">possibly
+difficult to implement</td>
+</tr>
+
+
+<tr>
+<td style="vertical-align: top;">RO<br>
+</td>
+<td style="vertical-align: top;">Rotate</td>
+<td>abort</td><td style="vertical-align: top;">inadequate
+definition&nbsp;in standard<br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">IJ<br>
+</td>
+<td style="vertical-align: top;">Image Justify</td>
+<td>abort</td><td style="vertical-align: top;">possibly
+easily to implement</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">KO<br>
+</td>
+<td style="vertical-align: top;">Knockout</td>
+<td>abort</td><td style="vertical-align: top;">possibly
+difficult to implement<br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">SR<br>
+</td>
+<td style="vertical-align: top;">Step Repeat</td>
+<td style="vertical-align: top;">ignore</td><td style="vertical-align: top;">possibly
+difficult to implement.<br>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<br>
+<table style="text-align: left; width: 570px; height: 129px;" border="1" cellpadding="2" cellspacing="2">
+<tbody>
+<tr>
+<td style="vertical-align: top; font-weight: bold; background-color: rgb(141, 204, 122);">Command<br>
+</td>
+<td style="vertical-align: top; font-weight: bold; background-color: rgb(141, 204, 122);">Description<br>
+</td>
+<td style="vertical-align: top; font-weight: bold; background-color: rgb(141, 204, 122);">Comment<br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">G10<br>
+</td>
+<td style="vertical-align: top;">&nbsp;
+Linear X 10 interpolation </td>
+<td style="vertical-align: top;">inadequate
+definition in standard</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">G11<br>
+</td>
+<td style="vertical-align: top;">&nbsp;
+Linear X 0.1 interpolation </td>
+<td style="vertical-align: top;">inadequate
+definition in standard</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">G12<br>
+</td>
+<td style="vertical-align: top;">&nbsp;
+Linear X 0.01 interpolation </td>
+<td style="vertical-align: top;">inadequate
+definition in standard</td>
+</tr>
+</tbody>
+</table>
+<br>
+<h3>Known&nbsp;problems:
+</h3>
+<ul>
+<li>Although the RS-274X standard does not
+exclude&nbsp;any of the
+standard C, R, O or P apertures from being used for drawing either arc
+or lines, it seems impractical implement such obscure use of the P and
+O polygons. Linear line drawing is limited to standard R or C apertures
+and arc drawing is limited to standard C apertures. I believe this
+limitation&nbsp;should satisfy virtually all Gerber files in
+existence.</li>
+<li>Polygons with self intersecting boundaries are not
+automatically
+corrected and will be draw unmodified.</li>
+<li>The standard allows circular or rectangle holes to be
+defined
+inside any of the Round, Rectangle, Orbround or Polygon type apertures.
+Gerb2tiff &nbsp;will render these holes as a cleared shape and will
+therefore&nbsp;blank out any preexisting image&nbsp;inside this
+area.&nbsp;</li>
+</ul>
+<br>
+<h3>Incompleteness of the RS-274-X standard <br>
+</h3>
+In
+doing this project I came to realize official the RS-274X (revision
+D) standard published fails to&nbsp;properly describe all features of Gerber
+files. In particular, several ambiguities exists in aperture
+descriptions that make implementation of the standard a bit of
+guess work. This would explain why no two CAD software tools produce
+identical outputs. The industry has gotten around the problem mainly
+by avoiding the use of obscure commands and rarely used features.
+<br>
+<br>
+<br>
+<span style="font-weight: bold;"></span><span style="font-weight: bold;"></span>
+<hr style="width: 100%; height: 2px;">
+<h2><a name="performance"></a>Performance</h2>
+Since version 1.0,&nbsp; gerb2tiff will process Gerber files by
+dividing the bitmap&nbsp;into strips and rendering each strip
+separately. This method greatly lowers system requirements since the
+whole bitmap no longer&nbsp;needs to be allocated in memory. Shown
+below are benchmark
+test results of two example
+Gerber files distributed with gerb2tiff package.<br>
+<h3>Benchmark Test Results</h3>
+<span style="font-style: italic;">System:</span>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+Processor: &nbsp;&nbsp;&nbsp; AMD
+Athlon 64 X2 &nbsp;2.0GHz core&nbsp;<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+OS:&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; Windows XP 32bit <br>
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+Compiler:&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; gcc version 3.4.5 (mingw-vista
+special r3),&nbsp; -O2<br>
+<br>
+<table style="text-align: left; background-color: white; width: 799px; height: 195px;" border="0" cellpadding="2" cellspacing="2">
+<tbody>
+<tr>
+<td style="vertical-align: top; text-align: center; width: 15%; background-color: rgb(255, 204, 0); font-weight: bold;">File
+name</td>
+<td style="vertical-align: top; text-align: center; width: 12%; background-color: rgb(255, 204, 0); font-weight: bold;">Polygon
+primitives</td>
+<td style="text-align: center; background-color: rgb(255, 204, 0); font-weight: bold;">DPI</td>
+<td style="text-align: center; background-color: rgb(255, 204, 0); font-weight: bold;">Image
+Area<br>
+(mm)</td>
+<td style="vertical-align: top; text-align: center; width: 20%; background-color: rgb(255, 204, 0); font-weight: bold;">Bitmap
+Size <br>
+(pixels)</td>
+<td style="text-align: center; background-color: rgb(255, 204, 0); font-weight: bold;">Process
+Memory<br>
+(MB)</td>
+<td style="vertical-align: top; text-align: center; background-color: rgb(255, 204, 0); font-weight: bold;">Time
+(seconds)</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: center; background-color: rgb(228, 240, 184);">Erik_2.gbr</td>
+<td style="text-align: center; vertical-align: middle; background-color: rgb(228, 240, 184);">56896</td>
+<td style="text-align: center; background-color: rgb(228, 240, 184);">5000</td>
+<td style="text-align: center; background-color: rgb(228, 240, 184);">427
+x 579</td>
+<td style="text-align: center; vertical-align: middle; background-color: rgb(228, 240, 184);">84133
+&nbsp;x&nbsp; 114133</td>
+<td style="text-align: center; background-color: rgb(228, 240, 184);">16</td>
+<td style="vertical-align: top; text-align: center; background-color: rgb(228, 240, 184);">13.4</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: center; background-color: rgb(228, 240, 184);">Erik_2.gbr</td>
+<td style="text-align: center; vertical-align: middle; background-color: rgb(228, 240, 184);">56900</td>
+<td style="text-align: center; background-color: rgb(228, 240, 184);">16000</td>
+<td style="text-align: center; background-color: rgb(228, 240, 184);">427
+x 579</td>
+<td style="text-align: center; vertical-align: middle; background-color: rgb(228, 240, 184);">269223&nbsp;
+x&nbsp; 365223</td>
+<td style="text-align: center; background-color: rgb(228, 240, 184);">27</td>
+<td style="vertical-align: top; text-align: center; background-color: rgb(228, 240, 184);">56.9</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: center; background-color: rgb(228, 240, 184);">PR422-0.2.gtl
+</td>
+<td style="vertical-align: top; text-align: center; background-color: rgb(228, 240, 184);">12486</td>
+<td style="text-align: center; background-color: rgb(228, 240, 184);">2400</td>
+<td style="text-align: center; background-color: rgb(228, 240, 184);">85
+x 64</td>
+<td style="text-align: center; vertical-align: middle; background-color: rgb(228, 240, 184);">8051
+&nbsp;x&nbsp; 6063</td>
+<td style="text-align: center; background-color: rgb(228, 240, 184);">4.0</td>
+<td style="vertical-align: top; text-align: center; background-color: rgb(228, 240, 184);">1.2</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: center; background-color: rgb(228, 240, 184);">PR422-0.2.gtl
+</td>
+<td style="text-align: center; vertical-align: middle; background-color: rgb(228, 240, 184);">12486</td>
+<td style="text-align: center; background-color: rgb(228, 240, 184);">1200</td>
+<td style="text-align: center; background-color: rgb(228, 240, 184);">85
+x 64</td>
+<td style="text-align: center; vertical-align: middle; background-color: rgb(228, 240, 184);">8051
+&nbsp;x &nbsp;6063</td>
+<td style="text-align: center; background-color: rgb(228, 240, 184);">3.7</td>
+<td style="vertical-align: top; text-align: center; background-color: rgb(228, 240, 184);">0.9</td>
+</tr>
+</tbody>
+</table>
+<br>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-weight: bold;"></span><br>
+<br>
+<br>
+<br>
+<br>
+<span style="font-weight: bold;"><br>
+</span><span style="font-weight: bold;"></span>
+</body></html>
