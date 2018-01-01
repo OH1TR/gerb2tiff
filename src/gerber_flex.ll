@@ -23,7 +23,7 @@
 void numberAfterChar(const char * str, char c, double *data, double multiplier=1)
 {
 	char *endptr;
-	char *p = strchr(str, c);
+	char *p = (char *)strchr(str, c);
 	if (p == 0) return;
 	double x = strtod( p+1, &endptr);
 	if (endptr == str) return;
